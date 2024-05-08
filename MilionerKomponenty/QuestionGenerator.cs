@@ -209,7 +209,7 @@ namespace MilionerKomponenty
 
         private async Task Start()
         {
-            string userContent = $"subject:{subject}, ilosc:{answerCount}";
+            string userContent = $"subject:{subject}, count:{answerCount}";
             var requestData = new
             {
                 messages = new[]

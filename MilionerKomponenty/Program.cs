@@ -14,7 +14,7 @@ namespace MilionerKomponenty
             //Application.Run(new Form1());
             var x = new QuestionGenerator();
             x.SetSubject("famous actors");
-            x.SetAnswerCount(3);
+            x.SetAnswerCount(8);
             x.Generate();
             while (x.IsGenerating())
             {
