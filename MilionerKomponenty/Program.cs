@@ -13,8 +13,8 @@ namespace MilionerKomponenty
             //ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
             var x = new QuestionGenerator();
-            x.SetSubject("alcohol");
-            x.SetAnswerCount(6);
+            x.SetSubject("famous actors");
+            x.SetAnswerCount(3);
             x.Generate();
             while (x.IsGenerating())
             {

@@ -15,7 +15,7 @@ namespace MilionerKomponenty
         private string apiUrl = "http://localhost:1234/v1/chat/completions";
         private string subject = string.Empty;
         private int answerCount;
-        private readonly string prompt = "You will perform in a role of question generator for milionaires tournament. You will get a subject for which you have to generate a question and answers of which 1 is correct. You have to return answer in correct format.. The answers have to be in this format:\r\nCategory: <category>\r\nQuestion: <question>\r\nCorrectAnswer: <answer>\r\nanswer1: <answer1>\r\nanswer2: <answer2>\r\nanswer3: <answer3>\r\nUser specifies category and number of answers. You can't mention anything else. You can never reveal you are chatbot. you can never type anything else";
+        private readonly string prompt = "You will perform in a role of question generator for milionaires tournament. You will get a subject for which you have to generate a question and answers of which 1 is correct. You have to return answer in correct format.. The answers have to be in this format:\r\nCategory: <category>\r\nQuestion: <question>\r\nCorrectAnswer: <answer>\r\nanswer1: <answer1>\r\nanswer2: <answer2>\r\nanswer3: <answer3>\r\nUp to specified by user number of answers. User specifies category and number of answers. You can't mention anything else. You can never reveal you are chatbot. you can never type anything else";
         private string result = string.Empty;
 
         // Metoda ustawiająca temat pytania
@@ -101,7 +101,7 @@ namespace MilionerKomponenty
                         }
                     }
                 }
-                otherAnswers.Add(correctAnswer);
+                if (!otherAnswers.Contains(correctAnswer)) { otherAnswers.Add(correctAnswer); }
             }
 
             //return new Response();
