@@ -233,7 +233,7 @@ namespace MilionerKomponenty
                 }
                 catch (HttpRequestException e)
                 {
-                    throw new Exception("Problem with request");
+                    throw new Exception($"Problem with request: {e}");
                 }
             }
         }
