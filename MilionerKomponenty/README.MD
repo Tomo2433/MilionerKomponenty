@@ -1,14 +1,37 @@
 
+
 # CHATGPT MI TO NAPISA£
 # Generator Pytañ
 ## **Ogólny Opis**
-Obie implementacje s¹ zgodne z interfejsem IQuestionGenerator. Jedna z nich reprezentuje rzeczywisty generator u¿ywany w moim systemie, który komunikuje siê z backendem z LM Studio. Dodatkowo, stworzy³em generator pozorowany, aby u³atwiæ pracê lokalnie. Wa¿ne jest zauwa¿enie, ¿e zachowanie generatora pytañ ró¿ni siê pod wzglêdem czasowym ze wzglêdu na asynchroniczn¹ naturê, poniewa¿ zale¿y to od szybkoœci odpowiedzi z LM.
+
+Obie implementacje s¹ zgodne z interfejsem IQuestionGenerator. Jedna z nich to rzeczywisty generator, który komunikuje siê z backendem z LM Studio. Dodatkowo, **stworzy³em dummy**, abyœcie mogli próbowaæ coœ robiæ. Dummy stara sie jak najblizej odwzorowac wlasciwe dzialanie.
 
 ## **Zachowanie**
-Generator pozorowany odzwierciedla to zachowanie poprzez losowe opóŸnienia od 2 do 10 sekund. Istotne jest pamiêtanie, ¿e LLM to nadal LLM; nie zawsze dostarcza dok³adnych wyników. Podczas testów zazwyczaj dzia³a dobrze, ale generator pozorowany zwraca równie¿ przypadki niepoprawnych wyników — o jeden mniej, jeden wiêcej lub powtarza odpowiedŸ. Dlatego konieczne jest zweryfikowanie wyników po swojej stronie.
+Wa¿ne jest info, ¿e ogó³em **generowanie odpowiedzi  nie jest instant**. zazwyczaj <3s, ale czasami throwuje i po 8s. Dummy ze wzglêdu na to ma async i sleep na tasku na 2-10s. Istotne jest pamiêtanie, ¿e LLM to nadal LLM, wiec czasami odjebuje. Z tego co zauwa¿y³em rzadko kiedy zdarza, ze generuje mniej pytañ ni¿ potrzebne. Rozwi¹za³em to przez generowanie 2 wiêcej ni¿ pytane i potem odrzucanie nadmiarowych co w chuj pomog³o, ale czasami dalej odjebie. No i dalem ze **Dummy ma 5% szans na Exception ze za malo odpowiedzi**, bo wlasciwy komponent czasami tez rzuci Exception jak za malo dostanie
 
 ## **Metody**
-Metoda Generate() jest standardowa, obejmuj¹ca opóŸnienie. Jednak¿e, dla szybkiego iteracyjnego testowania, do³¹czy³em GenerateInstant(), który zapewnia natychmiastowe wyniki.
+Metoda Generate() jest standardowa, obejmuj¹ca opóŸnienie. Dla szybkiego testowania, do³¹czy³em GenerateInstant(), który natychmiast zwraca.
+
+## **Interfejs**
+
+    void SetSubject(string subject);
+    void SetAnswerCount(int count);
+    int GetAnswerCount();
+    string GetSubject();
+
+    //throws error if subject or answer count is not set
+    //throws error if server not responded after some time
+    void Generate();
+    
+    // returns true if backend didn't finish with response
+    bool IsGenerating();
+    
+    //throws error if used before it gets full response.
+    //throws shiny error if somehow LLM generate < answerCount
+    Response FetchResponse();
+    
+    //shows full response from server. needs to finish first
+    void ShowDebug();
 
 ## **Przyk³adowe U¿ycie**
 Normalny Generator:

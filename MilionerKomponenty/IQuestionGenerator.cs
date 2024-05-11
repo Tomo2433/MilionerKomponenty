@@ -24,7 +24,7 @@ namespace MilionerKomponenty
         bool IsGenerating();
 
         //throws error if used before it gets full response.
-        // Answers field can contain more or less answers. It depends on whims of LLM. you need to do sanity check first
+        //throws shiny error if somehow LLM generate < answerCount
         Response FetchResponse();
 
         //shows full response from server. needs to finish first
