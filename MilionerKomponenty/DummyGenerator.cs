@@ -129,5 +129,15 @@ namespace MilionerKomponenty
             await task;
             result = "task";
         }
+
+        public void GenerateHelp(Response question)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetHelp()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
