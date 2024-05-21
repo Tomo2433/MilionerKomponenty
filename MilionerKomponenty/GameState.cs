@@ -11,6 +11,7 @@ namespace MilionerKomponenty
         int answercount;
         DummyGenerator g;
         Response r;
+        bool generating;
 
         public GameState() { 
             answercount = 4;
@@ -18,17 +19,9 @@ namespace MilionerKomponenty
             g.SetSubject("world war");
             g.SetAnswerCount(answercount);
             r = new Response("", "", "", new List<string>{""});
+            generating = true;
         }
 
-        public void FetchAndUpdate() {
-            g.Generate();
-            while(g.IsGenerating()) {
-                Console.Write(".");
-                Thread.Sleep(100);
-            }
-            Console.WriteLine(".");
-            r = g.FetchResponse();
-        }
 
         public string GetQuestion() {
             return r.Question;
@@ -38,6 +31,23 @@ namespace MilionerKomponenty
         }
         public string GetCorrectAnswer() {
             return r.CorrectAnswer;
+        }
+        public bool IsGenerating() {
+            return generating;
+        }
+
+        public async Task FetchAndUpdate()
+        {
+            generating = true;
+            await Task.Run(async () =>
+            {
+                g.Generate();
+                while(g.IsGenerating()) {
+                    // spinlock
+                }
+                r = g.FetchResponse();
+                generating = false;
+            });
         }
 
     }
