@@ -23,7 +23,7 @@ namespace MilionerKomponenty
         private void SetupTimer()
         {
             checkGenerationTimer = new Timer();
-            checkGenerationTimer.Interval = 500; // Sprawdzaj co 500 ms
+            checkGenerationTimer.Interval = 500;
             checkGenerationTimer.Tick += CheckGenerationStatus;
         }
 
@@ -58,15 +58,19 @@ namespace MilionerKomponenty
             button3.Visible = true;
             button4.Visible = true;
 
-            // Aktualizacja pola tekstowego z pytaniem
+           
             textBox1.Text = gameState.GetQuestion();
 
-            // Aktualizacja tekstów przycisków z odpowiedziami
             List<string> answers = gameState.GetAnswers();
             button1.Text = answers[0];
             button2.Text = answers[1];
             button3.Text = answers[2];
             button4.Text = answers[3];
+
+            button1.BackColor = Color.Navy;
+            button2.BackColor = Color.Navy;
+            button3.BackColor = Color.Navy;
+            button4.BackColor = Color.Navy;
         }
 
         private async void AnswerButtonClick(object sender, EventArgs e)
@@ -76,15 +80,16 @@ namespace MilionerKomponenty
 
             if (selectedAnswer == gameState.GetCorrectAnswer())
             {
-                //MessageBox.Show("Poprawna odpowiedŸ! Przechodzisz do kolejnego pytania.");
-                //clickedButton.BackColor = Color.Green;
+                clickedButton.BackColor = Color.Green;
+                await Task.Delay(2000); 
                 FetchAndDisplayQuestion();
             }
             else
             {
-                //clickedButton.BackColor = Color.Red;
+                clickedButton.BackColor = Color.Red;
+                await Task.Delay(500); 
                 MessageBox.Show("Niestety, to nie jest poprawna odpowiedŸ. Koniec gry.");
-                // Tutaj mo¿esz umieœciæ kod obs³uguj¹cy zakoñczenie gry
+                Application.Exit(); 
             }
         }
 

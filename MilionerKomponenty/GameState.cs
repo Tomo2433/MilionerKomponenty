@@ -12,7 +12,6 @@ namespace MilionerKomponenty
         DummyGenerator g;
         bool generating;
         Response r;
-        bool generating;
 
         // progi pieniezne
         int[] rewards;
