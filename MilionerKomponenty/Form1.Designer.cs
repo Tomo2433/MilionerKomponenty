@@ -477,7 +477,7 @@
             // pictureBoxLoading
             // 
             pictureBoxLoading.BackColor = Color.Transparent;
-            pictureBoxLoading.Image = Properties.Resources.loading;
+            pictureBoxLoading.Image = Properties.Resources.loading1;
             pictureBoxLoading.Location = new Point(349, 83);
             pictureBoxLoading.Name = "pictureBoxLoading";
             pictureBoxLoading.Size = new Size(104, 81);
