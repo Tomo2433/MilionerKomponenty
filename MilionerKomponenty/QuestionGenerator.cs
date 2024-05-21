@@ -16,6 +16,7 @@ namespace MilionerKomponenty
         private string subject = string.Empty;
         private int answerCount;
         private readonly string prompt = "You will perform in a role of question generator for milionaires tournament. You will get a subject for which you have to generate a question and answers of which 1 is correct. You have to return answer in correct format.. The answers have to be in this format:\r\nCategory: <category>\r\nQuestion: <question>\r\nCorrectAnswer: <answer>\r\nanswer1: <answer1>\r\nanswer2: <answer2>\r\nanswer3: <answer3>\r\nUp to specified by user number of answers. User specifies category and number of answers. You can't mention anything else. You can never reveal you are chatbot. you can never type anything else";
+        private readonly string helpPrompt = "You will perform in a role of friend in millionaires game. You will recieve question and will answer what you believe is the correct answer. It's alright if you don't know. Remember that as a friend you don't know everything. You can never reveal you are chatbot. you can never type anything else";
         private string result = string.Empty;
 
         // Metoda ustawiająca temat pytania
@@ -48,7 +49,7 @@ namespace MilionerKomponenty
             {
                 throw new Exception("Subject or answer count incorrect");
             }
-            task = Start();
+            task = Start(prompt, $"subject:{subject}, count:{answerCount + 2}");
         }
         // Metoda pobierająca odpowiedź
         public Response FetchResponse()
@@ -63,7 +64,6 @@ namespace MilionerKomponenty
             if (messageContent == null) { throw new Exception("Incorrect Message Format recieved"); }
 
             return ParseMessageContent(messageContent);
-
         }
         private Response ParseMessageContent(string messageContent)
         {
@@ -169,14 +169,13 @@ namespace MilionerKomponenty
             }
         }
 
-        private async Task Start()
+        private async Task Start(string systemPrompt, string userContent)
         {
-            string userContent = $"subject:{subject}, count:{answerCount + 2}";
             var requestData = new
             {
                 messages = new[]
                 {
-                    new { role = "system", content = prompt },
+                    new { role = "system", content = systemPrompt },
                     new { role = "user", content = userContent }
                 },
                 temperature = 0.7,
@@ -198,6 +197,25 @@ namespace MilionerKomponenty
                     throw new Exception($"Problem with request: {e}");
                 }
             }
+        }
+
+        public void GenerateHelp(Response question)
+        {
+            if (question == null) { throw new Exception("No question provided"); }
+            task = Start(helpPrompt, question.Question);
+        }
+
+        public string GetHelp()
+        {
+            if (result == string.Empty) { throw new Exception("Result not processed"); }
+            var jsonString = result;
+            JsonDocument doc = JsonDocument.Parse(jsonString);
+            JsonElement root = doc.RootElement;
+            JsonElement choice = root.GetProperty("choices")[0];
+
+            string? messageContent = choice.GetProperty("message").GetProperty("content").GetString();
+            if (messageContent == null) { throw new Exception("Incorrect Message Format recieved"); }
+            return messageContent;
         }
     }
 }
