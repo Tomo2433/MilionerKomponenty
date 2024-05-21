@@ -10,8 +10,15 @@ namespace MilionerKomponenty
     {
         int answercount;
         DummyGenerator g;
+        bool generating;
         Response r;
         bool generating;
+
+        // progi pieniezne
+        int[] rewards;
+        int current_reward_ix;
+        GameProgress game_progress;
+        // kola ratunkowe
 
         public GameState() { 
             answercount = 4;
@@ -20,6 +27,23 @@ namespace MilionerKomponenty
             g.SetAnswerCount(answercount);
             r = new Response("", "", "", new List<string>{""});
             generating = true;
+
+            rewards = new int[]{
+                500,
+                1000,
+                2000,
+                5000,
+                10000,
+                20000,
+                40000,
+                75000,
+                125000,
+                250000,
+                500000,
+                1000000
+            };
+            current_reward_ix = 0;
+            game_progress = GameProgress.GAME_IN_PROGRESS;
         }
 
 
@@ -50,5 +74,31 @@ namespace MilionerKomponenty
             });
         }
 
+        public void ResetGame() {
+            game_progress = GameProgress.GAME_IN_PROGRESS;
+            current_reward_ix = 0;
+        }
+
+        public GameProgress GetGameProgress() {
+            return game_progress;
+        }
+
+        public void PlayerResponded(bool is_response_correct) {
+            if(is_response_correct) {
+                if(current_reward_ix < rewards.Length) {
+                    current_reward_ix++;
+                }
+                else {
+                    game_progress = GameProgress.GAME_OVER_WIN;
+                }
+            }
+            else {
+                game_progress = GameProgress.GAME_OVER_LOSS;
+            }
+        }
+
+        public int GetCurrentReward() {
+            return rewards[current_reward_ix];
+        }
     }
 }
