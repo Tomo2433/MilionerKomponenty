@@ -32,6 +32,18 @@ namespace MilionerKomponenty
             //}
             //Console.WriteLine(x.GetHelp());
 
+            //var x = new DummyGenerator();
+            //x.SetSubject("world war");
+            //x.SetAnswerCount(4);
+            //x.Generate();
+            //while (x.IsGenerating())
+            //{
+            //    Console.WriteLine(".");
+            //    Thread.Sleep(100);
+            //}
+            //var res = x.FetchResponse();
+            //x.ShowDebug();
+
             /*  GAMESTATE DEBUG
             var g = new GameState();
             for(int i = 0; i < 5; i++) {

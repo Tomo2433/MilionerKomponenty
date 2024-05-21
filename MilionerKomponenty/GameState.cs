@@ -12,6 +12,7 @@ namespace MilionerKomponenty
         IQuestionGenerator g;
         bool generating;
         Response r;
+        bool generating;
 
         // progi pieniezne
         int[] rewards;
@@ -57,6 +58,20 @@ namespace MilionerKomponenty
         }
         public bool IsGenerating() {
             return generating;
+        }
+
+        public async Task FetchAndUpdate()
+        {
+            generating = true;
+            await Task.Run(async () =>
+            {
+                g.Generate();
+                while(g.IsGenerating()) {
+                    // spinlock
+                }
+                r = g.FetchResponse();
+                generating = false;
+            });
         }
 
         public async Task FetchAndUpdate()
