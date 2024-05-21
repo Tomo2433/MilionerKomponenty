@@ -15,7 +15,7 @@ namespace MilionerKomponenty
         string GetQuestion();
         List<string> GetAnswers();
         string GetCorrectAnswer();
-
-        void FetchAndUpdate();
+        bool IsGenerating();
+        Task FetchAndUpdate();
     }
 }
