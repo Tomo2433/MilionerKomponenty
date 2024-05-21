@@ -61,10 +61,12 @@
             label23 = new Label();
             label24 = new Label();
             label13 = new Label();
+            pictureBoxLoading = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLoading).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -472,12 +474,25 @@
             label13.TabIndex = 33;
             label13.Text = "1 MILION gąbek";
             // 
+            // pictureBoxLoading
+            // 
+            pictureBoxLoading.BackColor = Color.Transparent;
+            pictureBoxLoading.Image = Properties.Resources.loading;
+            pictureBoxLoading.Location = new Point(349, 83);
+            pictureBoxLoading.Name = "pictureBoxLoading";
+            pictureBoxLoading.Size = new Size(104, 81);
+            pictureBoxLoading.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxLoading.TabIndex = 34;
+            pictureBoxLoading.TabStop = false;
+            pictureBoxLoading.Visible = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.background;
             ClientSize = new Size(1002, 450);
+            Controls.Add(pictureBoxLoading);
             Controls.Add(label13);
             Controls.Add(label24);
             Controls.Add(label23);
@@ -517,6 +532,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLoading).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -556,5 +572,6 @@
         private Label label23;
         private Label label24;
         private Label label13;
+        private PictureBox pictureBoxLoading;
     }
 }
