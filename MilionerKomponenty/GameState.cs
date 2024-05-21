@@ -9,9 +9,10 @@ namespace MilionerKomponenty
     public class GameState : IGameState 
     {
         int answercount;
-        DummyGenerator g;
+        IQuestionGenerator g;
         bool generating;
         Response r;
+        bool generating;
 
         // progi pieniezne
         int[] rewards;
@@ -19,9 +20,9 @@ namespace MilionerKomponenty
         GameProgress game_progress;
         // kola ratunkowe
 
-        public GameState() { 
+        public GameState(IQuestionGenerator generator) { 
             answercount = 4;
-            g = new DummyGenerator();
+            g = generator;
             g.SetSubject("world war");
             g.SetAnswerCount(answercount);
             r = new Response("", "", "", new List<string>{""});
@@ -73,6 +74,19 @@ namespace MilionerKomponenty
             });
         }
 
+        public async Task FetchAndUpdate()
+        {
+            generating = true;
+            await Task.Run(async () =>
+            {
+                g.Generate();
+                while(g.IsGenerating()) {
+                    // spinlock
+                }
+                r = g.FetchResponse();
+                generating = false;
+            });
+        }
 
         public void ResetGame() {
             game_progress = GameProgress.GAME_IN_PROGRESS;
