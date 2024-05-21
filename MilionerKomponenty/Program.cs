@@ -13,8 +13,8 @@ namespace MilionerKomponenty
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
 
-            //var x = new QuestionGenerator();
-            //x.SetSubject("Animals");
+            //var x = new DummyGenerator();
+            //x.SetSubject("world war");
             //x.SetAnswerCount(4);
             //x.Generate();
             //while (x.IsGenerating())
@@ -23,27 +23,7 @@ namespace MilionerKomponenty
             //    Thread.Sleep(100);
             //}
             //var res = x.FetchResponse();
-            //res.Print();
-            //x.GenerateHelp(res);
-            //while (x.IsGenerating())
-            //{
-            //    Console.WriteLine(".");
-            //    Thread.Sleep(100);
-            //}
-            //Console.WriteLine(x.GetHelp());
-
-            /*  GAMESTATE DEBUG
-            var g = new GameState();
-            for(int i = 0; i < 5; i++) {
-                g.FetchAndUpdate();
-                while(g.IsGenerating()) {
-                    Console.Write(".");
-                    Thread.Sleep(100);
-                }
-                Console.WriteLine(".");
-                Console.WriteLine(g.GetCorrectAnswer());
-            }
-            */
+            //x.ShowDebug();
 
         }
     }
